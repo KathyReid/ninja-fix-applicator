@@ -4,6 +4,7 @@
 PATH=/opt/ninjablocks/bin:$PATH
 export SERIAL=$(sphere-serial)
 HALT=halt
+HALT="simulated halt"
 
 # after this package is installed, we need to wait 10 seconds to give the package installer
 # time to finish. then we sync, display a tick, stop the ledcontroller, sync again and halt.
