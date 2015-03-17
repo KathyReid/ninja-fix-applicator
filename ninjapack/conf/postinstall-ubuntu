@@ -8,8 +8,15 @@ export SERIAL=$(sphere-serial)
 # time to finish. then we sync, display a tick, stop the ledcontroller, sync again and halt.
 
 bash -c "(
-	sleep 10;
 	sync;
+	while true; do
+		if test -f /var/run/sphere-go-led-controller.pid &&
+			ps -p $(cat /var/run/sphere-go-led-controller.pid); then
+			break
+		fi
+	done
+	sync;
+	sleep 3
 	mosquitto_pub -t \$node/$SERIAL/led-controller -s <<EOF
 {
 	"method": 	"displayIcon",
