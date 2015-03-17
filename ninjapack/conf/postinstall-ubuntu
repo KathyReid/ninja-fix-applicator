@@ -2,7 +2,7 @@
 # after 5 seconds, halt
 
 PATH=/opt/ninjablocks/bin:$PATH
-serial=$(sphere-serial)
+export SERIAL=$(sphere-serial)
 
 # after this package is installed, we need to wait 10 seconds to give the package installer
 # time to finish. then we sync, display a tick, stop the ledcontroller, sync again and halt.
@@ -10,7 +10,7 @@ serial=$(sphere-serial)
 bash -c "(
 	sleep 10;
 	sync;
-	mosquitto_pub -t \$node/$serial/led-controller -s <<EOF
+	mosquitto_pub -t \$node/$SERIAL/led-controller -s <<EOF
 {
 	"method": 	"displayIcon",
 	"params":	[{"icon":"fix-applicator-stop.gif"}],
