@@ -10,13 +10,14 @@ export SERIAL=$(sphere-serial)
 bash -c "(
 	sync;
 	while true; do
-		if test -f /var/run/sphere-go-led-controller.pid &&
-			ps -p $(cat /var/run/sphere-go-led-controller.pid); then
+		if test -f /var/run/sphere-setup-assistant.pid  &&
+			ps -p $(cat /var/run/sphere-setup-assistant.pid); then
 			break
 		fi
+		sleep 1
 	done
+	stop sphere-setup-assistant
 	sync;
-	sleep 3
 	mosquitto_pub -t \$node/$SERIAL/led-controller -s <<EOF
 {
 	"method": 	"displayIcon",
